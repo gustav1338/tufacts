@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TuFacts 🎤</title>
+
+  <!-- OG -->
+  <meta property="og:title" content="TuFacts 🎤">
+  <meta property="og:description" content="Daily facts about the greatest rapper of all time.">
+  <meta property="og:url" content="https://gustav1338.github.io/tufacts/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #f5c518;
+      --bg: #0d0d0d;
+      --card: #161616;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --muted: #888;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      padding: 24px 20px;
+      gap: 0;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 12vw, 7rem);
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      line-height: 1;
+      text-shadow: 0 0 60px rgba(245, 197, 24, 0.3);
+    }
+
+    header p {
+      font-size: clamp(0.8rem, 3vw, 1rem);
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: clamp(28px, 6vw, 48px);
+      max-width: 680px;
+      width: 100%;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 60px rgba(245, 197, 24, 0.08);
+    }
+
+    .fact-number {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .quote-mark {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      color: var(--gold);
+      opacity: 0.15;
+      position: absolute;
+      top: 8px;
+      left: 20px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    #fact-text {
+      font-size: clamp(1.05rem, 3.5vw, 1.3rem);
+      font-weight: 600;
+      line-height: 1.65;
+      color: var(--text);
+      padding: 0 8px;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    #fact-text.fade-out {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .btn {
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold);
+      color: #000;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.4rem, 5vw, 1.9rem);
+      letter-spacing: 0.08em;
+      padding: 16px 40px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      box-shadow: 0 4px 24px rgba(245, 197, 24, 0.35);
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .btn:hover {
+      background: #ffd740;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(245, 197, 24, 0.5);
+    }
+
+    .btn:active {
+      transform: scale(0.97) translateY(0);
+      box-shadow: 0 2px 12px rgba(245, 197, 24, 0.3);
+    }
+
+    .btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #000;
+      flex-shrink: 0;
+    }
+
+    footer {
+      margin-top: 32px;
+      font-size: 0.72rem;
+      color: #444;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TuFacts</h1>
+    <p>100 facts about the legend</p>
+  </header>
+
+  <div class="card">
+    <span class="quote-mark">"</span>
+    <span class="fact-number" id="fact-num">#1</span>
+    <p id="fact-text">Loading...</p>
+  </div>
+
+  <button class="btn" id="btn" onclick="nextFact()">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+    </svg>
+    New TuFact
+  </button>
+
+  <footer>gustav1338.github.io/tufacts</footer>
+
+  <script>
+    let facts = [];
+    let shown = [];
+    let current = 0;
+
+    async function loadFacts() {
+      const res = await fetch('./facts.json');
+      facts = await res.json();
+      // Shuffle on load
+      facts = facts.sort(() => Math.random() - 0.5);
+      showFact(0);
+    }
+
+    function showFact(index) {
+      const el = document.getElementById('fact-text');
+      const num = document.getElementById('fact-num');
+
+      el.classList.add('fade-out');
+      setTimeout(() => {
+        el.textContent = facts[index];
+        num.textContent = `#${index + 1} of ${facts.length}`;
+        el.classList.remove('fade-out');
+      }, 250);
+    }
+
+    function nextFact() {
+      if (!facts.length) return;
+      current = (current + 1) % facts.length;
+      // Re-shuffle when we've cycled through all
+      if (current === 0) {
+        facts = facts.sort(() => Math.random() - 0.5);
+      }
+      showFact(current);
+    }
+
+    loadFacts();
+  </script>
+</body>
+</html>
